@@ -1,1 +1,6 @@
-spring.application.name=NoteProject
+spring:
+  application:
+    name: NoteProject
+
+jwt:
+  secret = ${JWT_SECRET}

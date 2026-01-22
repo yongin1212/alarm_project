@@ -1,4 +1,4 @@
-package com.example.noteproject.dto;
+package com.example.noteproject.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

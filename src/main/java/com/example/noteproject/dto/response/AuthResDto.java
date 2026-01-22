@@ -1,4 +1,4 @@
-package com.example.noteproject.dto;
+package com.example.noteproject.dto.response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SignupResDto {
+public class AuthResDto {
 
     @NotBlank
     private boolean success;
