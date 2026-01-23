@@ -47,8 +47,25 @@ public class AuthService {
 
     public AuthResDto login(LoginReqDto req){
         AuthResDto res = new AuthResDto();
-        if(userRepository.existsByUsername(req.getUsername())){
-            Optional<User> user = userRepository.findByUsername(req.getUsername());
+
+        Optional<User> userOpt = userRepository.findByUsername(req.getUsername());
+
+        if(userOpt.isEmpty()){
+            res.setMessage("등록되지 않은 사용자");
+            res.setSuccess(false);
+            return res;
         }
+
+        User user = userOpt.get();
+
+        if(!passwordEncoder.matches(req.getPassword(), user.getPassword())){
+            res.setMessage("비밀번호가 일치하지 않습니다");
+            res.setSuccess(false);
+            return res;
+        }
+
+        res.setMessage("로그인이 완료되었습니다");
+        res.setSuccess(true);
+        return res;
     }
 }

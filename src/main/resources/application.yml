@@ -1,6 +1,8 @@
 spring:
   application:
     name: NoteProject
-
-jwt:
-  secret = ${JWT_SECRET}
+  datasource:
+    url: jdbc:mysql://localhost:3306/alarm?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: root
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
