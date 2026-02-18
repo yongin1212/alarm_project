@@ -52,7 +52,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String validateToken(String token) {
+    public String getUsername(String token) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(secretKey)
@@ -66,4 +66,5 @@ public class JwtUtil {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰");
         }
     }
+
 }
