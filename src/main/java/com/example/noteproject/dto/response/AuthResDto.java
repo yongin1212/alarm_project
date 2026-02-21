@@ -8,6 +8,8 @@ import org.hibernate.sql.Update;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AuthResDto {
 
     @NotNull
