@@ -8,6 +8,7 @@ import com.example.noteproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public AuthResDto signup(SignupReqDto req){
         AuthResDto res = new AuthResDto();
         if(req.getUsername() == null || req.getPassword() == null || req.getPassword().equals(req.getUsername())){
