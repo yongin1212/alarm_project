@@ -6,6 +6,7 @@ import com.example.noteproject.entity.Alarm;
 import com.example.noteproject.repository.AlarmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -13,13 +14,13 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AlarmService {
 
     private final AlarmRepository repo;
 
-    public AlarmPostResDto createAnnouncement(AlarmPostReqDto req) {
+    public AlarmPostResDto createAlarm(AlarmPostReqDto req) {
 
-        LocalDateTime now = LocalDateTime.now();
         LocalDateTime alarmTime = req.alarmTime();
         try {
             Alarm alarm = Alarm.builder()
@@ -31,6 +32,7 @@ public class AlarmService {
 
             Alarm saved = repo.save(alarm);
 
+            LocalDateTime now = LocalDateTime.now();
             Duration duration = Duration.between(now, alarmTime);
             long diffMinutes = duration.toMinutes();
 

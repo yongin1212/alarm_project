@@ -2,11 +2,11 @@ package com.example.noteproject.controller;
 
 import com.example.noteproject.dto.request.LoginReqDto;
 import com.example.noteproject.dto.request.SignupReqDto;
-import com.example.noteproject.dto.response.AuthResDto;
+import com.example.noteproject.dto.response.LoginResDto;
+import com.example.noteproject.dto.response.SignupResDto;
 import com.example.noteproject.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +21,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResDto> login(@Valid @RequestBody LoginReqDto req){
-        AuthResDto res = authService.login(req);
+    public ResponseEntity<LoginResDto> login(@Valid @RequestBody LoginReqDto req){
+        LoginResDto res = authService.login(req);
         if(res.isSuccess()){
             return ResponseEntity.ok(res);
         }
@@ -30,8 +30,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResDto> signup(@Valid @RequestBody SignupReqDto req){
-        AuthResDto res = authService.signup(req);
+    public ResponseEntity<SignupResDto> signup(@Valid @RequestBody SignupReqDto req){
+        SignupResDto res = authService.signup(req);
         if(res.isSuccess()){
             return ResponseEntity.status(201).body(res);
         }

@@ -19,5 +19,5 @@ public class SignupReqDto {
 
     @NotBlank
     @Size(min = 8, max = 16)
-    private String checkedPassword;
+    private String confirmPassword;
 }

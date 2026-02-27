@@ -1,20 +1,22 @@
 package com.example.noteproject.dto.response;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.sql.Update;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthResDto {
+public class LoginResDto {
 
     @NotNull
     private boolean success;
 
     @NotNull
     private String message;
+
+    private String accesstoken;
+
+    private String refreshtoken;
 }

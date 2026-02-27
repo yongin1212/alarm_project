@@ -1,6 +1,6 @@
 package com.example.noteproject.jwt;
 
-import com.fasterxml.jackson.databind.ObjectMapper; // 패키지 경로 표준으로 수정
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -8,41 +8,41 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
 
-    private static final List<String> PUBLIC_PATHS = List.of(
-            "/auth/login",
-            "/auth/signup"
-    );
+
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        log.debug("uri:{}",uri);
+        return uri.startsWith("/auth/");
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
 
-        String uri = request.getRequestURI();
-
-        if (PUBLIC_PATHS.stream().anyMatch(uri::startsWith)) {
-            chain.doFilter(request, response);
-            return;
-        }
 
         String header = request.getHeader("Authorization");
 
