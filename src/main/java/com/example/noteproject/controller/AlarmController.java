@@ -1,14 +1,14 @@
 package com.example.noteproject.controller;
 
 import com.example.noteproject.dto.request.AlarmPostReqDto;
+import com.example.noteproject.dto.response.AlarmGetResDto;
 import com.example.noteproject.dto.response.AlarmPostResDto;
+import com.example.noteproject.entity.Alarm;
 import com.example.noteproject.service.AlarmService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,11 +19,16 @@ public class AlarmController {
 
     @PostMapping("/post")
     private ResponseEntity<AlarmPostResDto> createAlarm(@ModelAttribute AlarmPostReqDto req){
-        AlarmPostResDto resDto = alarmService.createAlarm(req);
-        if (resDto.isSuccess()){
-            return ResponseEntity.ok(resDto);
+        AlarmPostResDto res = alarmService.createAlarm(req);
+        if (res.isSuccess()){
+            return ResponseEntity.ok(res);
         }
-        return ResponseEntity.badRequest().body(resDto);
+        return ResponseEntity.badRequest().body(res);
     }
 
+    @GetMapping("/get")
+    public ResponseEntity<AlarmGetResDto> getAlarm(@RequestParam Long alarmId){
+        AlarmGetResDto res = alarmService.getAlarm(alarmId);
+        return ResponseEntity.ok(res);
+    }
 }

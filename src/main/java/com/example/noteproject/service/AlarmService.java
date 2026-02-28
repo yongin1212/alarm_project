@@ -1,6 +1,7 @@
 package com.example.noteproject.service;
 
 import com.example.noteproject.dto.request.AlarmPostReqDto;
+import com.example.noteproject.dto.response.AlarmGetResDto;
 import com.example.noteproject.dto.response.AlarmPostResDto;
 import com.example.noteproject.entity.Alarm;
 import com.example.noteproject.repository.AlarmRepository;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +60,17 @@ public class AlarmService {
         } catch (IOException e) {
             throw new RuntimeException("파일 저장 중 오류가 발생했습니다.", e);
         }
+    }
 
+    public AlarmGetResDto getAlarm(Long id) {
+        Alarm alarm = repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 알람을 찾을 수 없습니다. ID: " + id));
+        AlarmGetResDto res = AlarmGetResDto.builder()
+                .id(alarm.getId())
+                .alarmName(alarm.getAlarmName())
+                .alarmTime(alarm.getAlarmTime())
+                .build();
+
+        return res;
     }
 }
