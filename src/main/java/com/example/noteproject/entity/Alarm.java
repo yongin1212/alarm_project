@@ -28,4 +28,8 @@ public class Alarm {
     private String alarmName;
 
     private LocalDateTime alarmTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
