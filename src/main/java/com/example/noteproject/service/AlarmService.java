@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -75,12 +76,17 @@ public class AlarmService {
         return res;
     }
 
-    public AlarmGetAllResDto getAlarmAll() {
+    public List<AlarmGetResDto> getAlarmAll() {
         List<Alarm> alarms = repo.findAll();
-        AlarmGetAllResDto res = AlarmGetAllResDto.builder()
-                .id(alarms.get().getId())
 
-                .build();
+        // 리스트를 순회하며 각각의 Alarm을 DTO로 변환하여 다시 리스트로 만듭니다.
+        return alarms.stream()
+                .map(alarm -> AlarmGetResDto.builder()
+                        .id(alarm.getId())
+                        .alarmName(alarm.getAlarmName())
+                        .alarmTime(alarm.getAlarmTime())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }
