@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/alarm")
@@ -28,5 +30,11 @@ public class AlarmController {
     public ResponseEntity<AlarmGetResDto> getAlarm(@RequestParam Long alarmId){
         AlarmGetResDto res = alarmService.getAlarm(alarmId);
         return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/get/all")
+    public ResponseEntity<List<AlarmGetResDto>> getAllAlarm(){
+        List<AlarmGetResDto> resDtos = alarmService.getAlarmAll();
+        return ResponseEntity.ok(resDtos);
     }
 }
